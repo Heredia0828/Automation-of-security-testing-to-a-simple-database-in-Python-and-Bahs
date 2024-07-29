@@ -1,0 +1,30 @@
+Python Backup Script
+import os
+import shutil
+from datetime import datetime
+
+def backup_database(db_path, backup_dir):
+    """
+    Backs up the database by copying it to the backup directory with a timestamp.
+
+    :param db_path: Path to the original database file.
+    :param backup_dir: Directory where the backup will be stored.
+    """
+    if not os.path.exists(backup_dir):
+        os.makedirs(backup_dir)
+    
+    # Get the current timestamp
+    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+    
+    # Create backup file name
+    db_name = os.path.basename(db_path)
+    backup_file = f"{backup_dir}/{db_name}_{timestamp}.bak"
+    
+    # Copy the database file to the backup directory
+    shutil.copy(db_path, backup_file)
+    print(f"Database backed up as {backup_file}")
+
+# Example usage
+db_path = 'path/to/your/database.db'
+backup_dir = 'path/to/your/backup/directory'
+backup_database(db_path, backup_dir)
